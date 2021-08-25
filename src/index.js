@@ -9,13 +9,17 @@ module.exports = function check(str, bracketsConfig) {
   for (const value of Object.values(BRACKETS_PAIR)) {
     OPEN_BRACKETS.push(value);
   }
-  
+
   let stack = [];
+  let stack2 = [];
 
     for (let i = 0; i < str.length; i++) {
       let current = str[i];
-      
-      if (OPEN_BRACKETS.includes(current)) {
+
+      if(current === BRACKETS_PAIR[current]) {
+        stack2.push(current);
+
+      } else if (OPEN_BRACKETS.includes(current) && current !== BRACKETS_PAIR[current]) {
         stack.push(current);
       } else {
         if (stack.length === 0) {
@@ -23,7 +27,6 @@ module.exports = function check(str, bracketsConfig) {
         }
 
         let top = stack[stack.length - 1];
-
         if (BRACKETS_PAIR[current] === top) {
           stack.pop();
         } else {
